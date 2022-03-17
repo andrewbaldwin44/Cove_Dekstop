@@ -1,0 +1,14 @@
+{
+  "short_name": "Cove",
+  "name": "Cove,
+  "icons": [
+    {
+      "src": "favicon-96px.png",
+      "type": "image/x-png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

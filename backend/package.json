@@ -1,0 +1,23 @@
+{
+  "name": "@CoveDesktop/backend",
+  "version": "1.0.0",
+  "author": "Andrew Baldwin",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "file-system": "^2.2.2",
+    "firebase-admin": "^9.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "morgan": "^1.10.0",
+    "node-deezer": "^0.3.3",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.2"
+  }
+}
