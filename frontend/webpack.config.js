@@ -1,78 +1,78 @@
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const PRODUCTION = process.env.PRODUCTION === "true";
+const PRODUCTION = process.env.PRODUCTION === 'true';
 
 const commonConfig = {
-  mode: PRODUCTION ? "production" : "development",
-  devtool: PRODUCTION ? "source-map" : "eval-cheap-module-source-map",
+  mode: PRODUCTION ? 'production' : 'development',
+  devtool: PRODUCTION ? 'source-map' : 'eval-cheap-module-source-map',
 };
 
 const mainConfig = {
   ...commonConfig,
 
-  entry: "./src/electron.ts",
+  entry: './src/electron.ts',
 
-  target: "electron-main",
+  target: 'electron-main',
 
   module: {
     rules: [
       {
-        test: /\.(js|ts|tsx?)$/,
-        loader: "babel-loader",
+        test: /\.ts$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
       },
     ],
   },
 
   output: {
-    path: __dirname + "/dist",
-    filename: "electron.js",
+    path: __dirname + '/dist',
+    filename: 'electron.js',
   },
 };
 
 const rendererConfig = {
   ...commonConfig,
 
-  entry: "./src/index.js",
+  entry: './src/index.tsx',
 
-  target: "electron-renderer",
-
-  devtool: "source-map",
+  target: 'electron-renderer',
 
   module: {
     rules: [
       {
         test: /\.(js|ts|tsx?)$/,
-        loader: "ts-loader",
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        options: {
-          compilerOptions: {
-            noEmit: false,
-          },
-        },
       },
       {
         test: /\.(png|svg|jpg|jpeg)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
 
   resolve: {
-    extensions: [".js", ".ts", ".tsx"],
-    modules: ["node_modules"],
+    extensions: ['.js', '.ts', '.tsx'],
+    modules: ['node_modules'],
   },
 
   output: {
-    path: __dirname + "/dist",
-    filename: "react.js",
+    path: __dirname + '/dist',
+    filename: 'react.js',
   },
+
+  // externals: {
+  //   fs: 'commonjs fs',
+  // },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: './src/index.html',
+    }),
+    new webpack.ProvidePlugin({
+      fs: 'fs',
     }),
   ],
 };

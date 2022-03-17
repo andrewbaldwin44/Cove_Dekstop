@@ -5,7 +5,7 @@ import SelectUsers from './SelectUsers';
 
 import { StyledInput } from './index';
 
-import { ReactComponent as DoorIcon } from '../../assets/images/door.svg';
+import DoorIcon from '../../assets/images/door.svg';
 
 function PageTwo({ pageSwitch, createNewRoom, addMember }) {
   const [users, setUsers] = useState(null);
@@ -20,13 +20,10 @@ function PageTwo({ pageSwitch, createNewRoom, addMember }) {
     fetch(`/search_users?search=${search}`)
       .then(response => response.json())
       .then(({ searchedUsers }) => setUsers(searchedUsers));
-  }
+  };
 
   return (
-    <Wrapper
-      onSubmit={createNewRoom}
-      pageSwitch={pageSwitch}
-    >
+    <Wrapper onSubmit={createNewRoom} pageSwitch={pageSwitch}>
       <label htmlFor='user-select'>Invite your Friends!</label>
       <StyledInput
         id='user-select'
@@ -35,22 +32,15 @@ function PageTwo({ pageSwitch, createNewRoom, addMember }) {
         onInput={handleUserSearch}
         autoComplete='off'
       />
-      <SelectUsers
-        users={users}
-        hasSearched={hasSearched}
-        addMember={addMember}
-      />
-    <SubmitContainer>
-        <SubmitButton
-          type='submit'
-          pageSwitch={pageSwitch}
-          >
+      <SelectUsers users={users} hasSearched={hasSearched} addMember={addMember} />
+      <SubmitContainer>
+        <SubmitButton type='submit' pageSwitch={pageSwitch}>
           <StyledDoorIcon />
           Open
         </SubmitButton>
       </SubmitContainer>
     </Wrapper>
-  )
+  );
 }
 
 const FadeInRight = keyframes`
@@ -72,7 +62,7 @@ const Wrapper = styled.form`
   opacity: 1;
   transform: translateX(900px);
 
-  animation-name: ${({ pageSwitch }) => pageSwitch ? FadeInRight : ''};
+  animation-name: ${({ pageSwitch }) => (pageSwitch ? FadeInRight : '')};
   animation-fill-mode: forwards;
   animation-duration: 1s;
 `;

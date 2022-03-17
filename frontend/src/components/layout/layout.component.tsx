@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Navbar from 'components/navbar/navbar.component';
+// import Navbar from 'components/navbar/navbar.component';
 import breakpoints from 'styles/breakpoints';
 
 interface IMain {
@@ -15,7 +15,6 @@ interface ILayout extends IMain {
 const Layout = ({ children, verticalPadding = true }: ILayout) => {
   return (
     <section>
-      <Navbar />
       <Main verticalPadding={verticalPadding} className='o-container f-container'>
         {children}
       </Main>

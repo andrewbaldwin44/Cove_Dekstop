@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 
-import reducer from 'redux/reducers';
+import reducer from './reducers';
 
 export default function configureStore(initialState?: { [key: string]: any }) {
   const store = createStore(

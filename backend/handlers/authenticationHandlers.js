@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
 const {
   queryDatabase,
@@ -19,12 +19,9 @@ const {
   getUidFromEmail,
   registerNewRoomMember,
   getMemberData,
-} = require('../utils/authenticationUtils');
+} = require("../utils/authenticationUtils");
 
-const {
-  getSearchResults,
-  toArray,
-} = require('../utils/index');
+const { getSearchResults, toArray } = require("../utils/index");
 
 const {
   DATABASE_PATHS: {
@@ -33,21 +30,21 @@ const {
     ROOMS_PATH,
     ROOMS_MEMBERS_PATH,
   },
-} = require('../constants');
+} = require("../constants");
 
-require('dotenv').config({path: '../.env'});
+require("dotenv").config();
 
 admin.initializeApp({
   credential: admin.credential.cert({
-    type: 'service_account',
+    type: "service_account",
     project_id: process.env.FIREBASE_PROJECT_ID,
     private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
     client_email: process.env.FIREBASE_CLIENT_EMAIL,
     client_id: process.env.FIREBASE_CLIENT_ID,
-    auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-    token_uri: 'https://oauth2.googleapis.com/token',
-    auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+    auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    token_uri: "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
     client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT,
   }),
   databaseURL: process.env.FB_DATABASE_URL,
@@ -68,25 +65,23 @@ async function handleLogin(req, res) {
   let acceptedData = { userID, email, displayName, photoURL };
 
   try {
-    let message = '';
+    let message = "";
 
     if (await isReturningUser(userID, database)) {
       message = `Welcome back ${displayName}!`;
-    }
-    else {
+    } else {
       await handleNewUser(userID, acceptedData);
 
       message = `Welcome ${displayName}!`;
     }
 
     res.status(201).json({ status: 201, userData: acceptedData, message });
-  }
-  catch ({ message }) {
+  } catch ({ message }) {
     res.status(401).json({ status: 401, message });
   }
 }
 
-async function handleNewRoom(req, res)  {
+async function handleNewRoom(req, res) {
   const { roomName, roomBackground, userID, selectedMembers } = req.body;
 
   try {
@@ -102,8 +97,7 @@ async function handleNewRoom(req, res)  {
     );
 
     res.status(201).json({ status: 201, ...roomData });
-  }
-  catch ({ message }) {
+  } catch ({ message }) {
     res.status(401).json({ status: 401, message });
   }
 }
@@ -121,15 +115,14 @@ async function validateRoomMember(req, res) {
 
     if (ownedRooms && ownedRooms[roomID]) {
       res.status(201).json({ status: 201, isOwner: true, isMember: true });
-    }
-    else if (roomMembers && roomMembers[userID]) {
+    } else if (roomMembers && roomMembers[userID]) {
       res.status(201).json({ status: 201, isOwner: false, isMember: true });
+    } else {
+      res
+        .status(401)
+        .json({ status: 401, message: "You do not have access to this room" });
     }
-    else {
-      res.status(401).json({ status: 401, message: 'You do not have access to this room' });
-    }
-  }
-  catch ({ message }) {
+  } catch ({ message }) {
     res.status(401).json({ status: 401, message });
   }
 }
@@ -141,14 +134,13 @@ async function handleRoomDetails(req, res) {
     const roomDetails = await getRoomDetails(userRooms, database);
 
     res.status(201).json({ status: 201, roomDetails });
-  }
-  catch ({ message }) {
+  } catch ({ message }) {
     res.status(401).json({ status: 401, message });
   }
 }
 
 async function handleUserSearch(req, res) {
-  const { search } = req.query || '';
+  const { search } = req.query || "";
 
   try {
     const userDataSnapshot = await database.collection(USERS_PATH).get();
@@ -156,8 +148,7 @@ async function handleUserSearch(req, res) {
     const limitResults = searchedUsers.slice(0, 10);
 
     res.status(200).json({ status: 200, searchedUsers: limitResults });
-  }
-  catch ({ message }) {
+  } catch ({ message }) {
     res.status(40).json({ status: 400, message });
   }
 }
@@ -181,13 +172,11 @@ async function handleInviteValidation(req, res) {
       await registerNewRoomMember(userID, roomID, database);
 
       res.status(201).json({ status: 201 });
+    } else {
+      throw new Error("Invalid invite");
     }
-    else {
-      throw new Error('Invalid invite');
-    }
-  }
-  catch (error) {
-    res.status(401).json({ status: 401, message: 'Invalid invite' });
+  } catch (error) {
+    res.status(401).json({ status: 401, message: "Invalid invite" });
   }
 }
 
@@ -195,16 +184,19 @@ async function handleRoomMembers(req, res) {
   const { roomID } = req.params;
 
   try {
-    const membersResponse = await queryDatabase(ROOMS_PATH, ROOMS_MEMBERS_PATH, database);
+    const membersResponse = await queryDatabase(
+      ROOMS_PATH,
+      ROOMS_MEMBERS_PATH,
+      database
+    );
     const allMembersData = membersResponse.data();
     const roomMemberIDs = allMembersData[roomID];
 
     const roomMembers = await getMemberData(roomMemberIDs, database);
 
     res.status(200).json({ status: 200, roomMembers });
-  }
-  catch (error) {
-    res.status(404).json({ status: 404, message: 'No room members found!' });
+  } catch (error) {
+    res.status(404).json({ status: 404, message: "No room members found!" });
   }
 }
 

@@ -6,9 +6,10 @@
   "scripts": {
     "start:frontend": "yarn --cwd frontend start",
     "start:backend": "yarn --cwd backend start",
-    "start": "yarn start:frontend && yarn start:backend"
+    "start": "npm-run-all --parallel start:frontend start:backend"
   },
   "dependencies": {
+    "npm-run-all": "^4.1.5",
     "peer": "^0.5.3",
     "peerjs": "^1.3.1",
     "react-hook-form": "^6.5.1"

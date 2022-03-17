@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as Pelican} from '../../assets/images/pelican.svg';
+import Pelican from '../../assets/images/pelican.svg';
 
 function Logo() {
   return (
@@ -9,7 +9,7 @@ function Logo() {
       <h1>Cove</h1>
       <Pelican />
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -36,4 +36,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default Logo
+export default Logo;

@@ -1,47 +1,44 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { ReactComponent as GoogleIcon } from  '../../assets/images/google-icon.svg';
+import GoogleIcon from '../../assets/images/google-icon.svg';
 
 import { AuthenticationContext } from '../AuthenticationContext';
 
 function Footer({ accountCreated, handleRedirect, sendErrorCode, signUpLink, loginLink }) {
-  const {
-    signInWithGoogle,
-  } = useContext(AuthenticationContext);
+  const { signInWithGoogle } = useContext(AuthenticationContext);
 
   const googleLogin = () => {
     signInWithGoogle()
       .then(({ user: { email } }) => email)
       .then(handleRedirect)
       .catch(sendErrorCode);
-  }
+  };
 
   return (
     <>
-      <Seperator><span>OR</span></Seperator>
+      <Seperator>
+        <span>OR</span>
+      </Seperator>
 
-      <GoogleButton
-        onClick={googleLogin}
-      >
+      <GoogleButton onClick={googleLogin}>
         <StyledGoogleIcon />
         Continue with Google
       </GoogleButton>
       {accountCreated ? (
-          <NavigateContainer>
-            <span>{'New here? '}</span>
-            <StyledLink to={signUpLink}>Create an Account</StyledLink>
-          </NavigateContainer>
-        ) : (
-          <NavigateContainer>
-            <span>Already Have an Account?</span>
-            <StyledLink to={loginLink}>Log In</StyledLink>
-          </NavigateContainer>
-        )
-      }
+        <NavigateContainer>
+          <span>{'New here? '}</span>
+          <StyledLink to={signUpLink}>Create an Account</StyledLink>
+        </NavigateContainer>
+      ) : (
+        <NavigateContainer>
+          <span>Already Have an Account?</span>
+          <StyledLink to={loginLink}>Log In</StyledLink>
+        </NavigateContainer>
+      )}
     </>
-  )
+  );
 }
 
 const Seperator = styled.p`
@@ -54,8 +51,9 @@ const Seperator = styled.p`
     display: inline-block;
     position: relative;
 
-    &:before, :after {
-      content: "";
+    &:before,
+    :after {
+      content: '';
       position: absolute;
       border-bottom: 1px solid var(--light-gray);
       width: calc(var(--authentication-form-width) / 2 - 30px);

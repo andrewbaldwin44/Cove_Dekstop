@@ -1,7 +1,7 @@
-import { createActionTypes, action } from "utils/actions";
-import { IThemeColors } from "styles/config/themes";
+import { createActionTypes, action } from '../../utils/actions';
+import { IThemeColors } from '../../styles/config/themes';
 
-export const THEME = createActionTypes("THEME", ["CHANGE_THEME"]);
+export const THEME = createActionTypes('THEME', ['CHANGE_THEME']);
 
 interface IChangeThemePayload {
   colors: IThemeColors;
@@ -13,6 +13,5 @@ export interface IThemeAction {
 }
 
 export const themeActions = {
-  changeTheme: (payload: IChangeThemePayload) =>
-    action(THEME.CHANGE_THEME, payload),
+  changeTheme: (payload: IChangeThemePayload) => action(THEME.CHANGE_THEME, payload),
 };

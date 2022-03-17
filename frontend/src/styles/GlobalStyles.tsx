@@ -14,17 +14,7 @@ interface IGlobalStyles {
 }
 
 function GlobalStyles({ colors }: IGlobalStyles) {
-  return (
-    <>
-      <Reset />
-      <Grid />
-      <Typography />
-      <TypographyUtils />
-      <Utility />
-      <Input />
-      <Colors colors={colors} />
-    </>
-  );
+  return null;
 }
 
 const storeConnector = ({ theme }: { theme: { colors: IThemeColors } }) => ({

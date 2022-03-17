@@ -1,5 +1,5 @@
-import { themes } from 'styles/config/themes';
-import { THEME, IThemeAction } from 'modules/theme/theme.actions';
+import { themes } from '../../styles/config/themes';
+import { THEME, IThemeAction } from '../../modules/theme/theme.actions';
 
 const initialState = {
   colors: themes.default.colors,
