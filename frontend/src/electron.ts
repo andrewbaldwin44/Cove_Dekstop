@@ -1,5 +1,8 @@
 const { app, BrowserView, BrowserWindow } = require('electron');
 
+const PRODUCTION = process.env.PRODUCTION === 'true';
+const PORT = process.env.PORT || 3000;
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -11,8 +14,12 @@ const createWindow = () => {
   // win.setBrowserView(view);
   // view.setBounds({ x: 0, y: 0, width: 300, height: 300 });
   // view.webContents.loadURL("https://electronjs.org");
-
-  win.loadFile('index.html');
+  console.log({ PRODUCTION, PORT });
+  if (PRODUCTION) {
+    win.loadFile('index.html');
+  } else {
+    win.loadURL(`http://localhost:${PORT}/index.html`);
+  }
 };
 
 app.whenReady().then(() => {

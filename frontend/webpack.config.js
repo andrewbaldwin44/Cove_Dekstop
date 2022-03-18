@@ -26,6 +26,10 @@ const mainConfig = {
     ],
   },
 
+  optimization: {
+    nodeEnv: 'electron',
+  },
+
   output: {
     path: __dirname + '/dist',
     filename: 'electron.js',
@@ -56,11 +60,24 @@ const rendererConfig = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
     modules: ['./src', 'node_modules'],
+
+    fallback: {
+      fs: false,
+    },
+  },
+
+  optimization: {
+    nodeEnv: 'web',
   },
 
   output: {
     path: __dirname + '/dist',
     filename: 'react.js',
+  },
+
+  devServer: {
+    hot: true,
+    port: '3000',
   },
 
   plugins: [

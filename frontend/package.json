@@ -4,8 +4,13 @@
   "author": "Andrew Baldwin",
   "main": "dist/index.html",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "yarn build && electron ./dist/electron.js",
+    "build": "PRODUCTION=true webpack --config webpack.config.js",
+    "watch": "yarn build --watch",
+    "dev:web": "webpack-dev-server --config webpack.config.js --no-client-overlay-warnings",
+    "dev:electron": "electron src/electron.ts",
+    "dev": "npm-run-all --parallel dev:web dev:electron",
+    "start:electron": "PRODUCTION=true electron ./dist/electron.js",
+    "start": "npm-run-all --parallel build start:electron",
     "clean": "rm -rf ./dist"
   },
   "dependencies": {
@@ -57,6 +62,6 @@
     "typescript": "^4.2.3",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.7.4"
   }
 }
