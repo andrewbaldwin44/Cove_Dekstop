@@ -55,7 +55,7 @@ const rendererConfig = {
 
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
-    modules: ['node_modules'],
+    modules: ['./src', 'node_modules'],
   },
 
   output: {
@@ -63,16 +63,13 @@ const rendererConfig = {
     filename: 'react.js',
   },
 
-  // externals: {
-  //   fs: 'commonjs fs',
-  // },
-
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
     new webpack.ProvidePlugin({
       fs: 'fs',
+      React: 'react',
     }),
   ],
 };

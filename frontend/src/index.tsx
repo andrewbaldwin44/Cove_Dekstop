@@ -1,11 +1,11 @@
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import AuthenticationProvider from './components/AuthenticationContext';
-import App from './components/App';
+import AuthenticationProvider from 'components/AuthenticationContext';
+import App from 'components/App';
 
-import configureStore from './redux/store';
+import configureStore from 'redux/store';
 
 const store = configureStore();
 
