@@ -94,18 +94,20 @@ A folder is provided, `/server`, with the back-end code. This is a local server 
 
 **Frontend**:
 
+- TypeScript
 - JavaScript
 - React.js
 - Redux.js
-- Electron
+- Electron.js
+- WebRTC
+- Webpack
 
 **Backend**:
 
 - Node.js
 - Express
 - Socket.io
-- WebRTC,
-- Firebase Authentication,
+- Firebase Authentication
 - Cloud Firestore Realtime Database
 
 ### Author
