@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Pelican from '../../assets/images/pelican.svg';
+import Pelican from '../../assets/icons/pelican';
 
 function Logo() {
   return (

@@ -5,7 +5,7 @@ import SelectUsers from './SelectUsers';
 
 import { StyledInput } from './index';
 
-import DoorIcon from '../../assets/images/door.svg';
+import DoorIcon from '../../assets/icons/door';
 
 function PageTwo({ pageSwitch, createNewRoom, addMember }) {
   const [users, setUsers] = useState(null);

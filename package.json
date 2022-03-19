@@ -5,9 +5,11 @@
   "license": "MIT",
   "scripts": {
     "start:frontend": "yarn --cwd frontend start",
-    "dev:frontend": "yarn --cwd frontend dev",
     "start:backend": "yarn --cwd backend start",
+    "dev:frontend": "yarn --cwd frontend dev",
     "dev:backend": "yarn --cwd backend dev",
+    "dev:frontend:web": "yarn --cwd frontend dev:web",
+    "dev:web": "npm-run-all --parallel dev:backend dev:frontend:web",
     "start": "npm-run-all --parallel start:frontend start:backend",
     "dev": "npm-run-all --parallel dev:frontend dev:backend"
   },
