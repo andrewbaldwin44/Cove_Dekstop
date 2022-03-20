@@ -10,25 +10,23 @@ import { createLoginLink } from '../../utils/authenticationUtils';
 
 import { isContainingData, isEmptyData } from '../../utils/index';
 
-function Header() {
-  const {
-    userData,
-  } = useContext(AuthenticationContext);
+export default function Navbar() {
+  const { userData } = useContext(AuthenticationContext);
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const redirect = query.get('redirect');
   const inviteID = query.get('id');
-  const signUpLink = createLoginLink(redirect, inviteID, 'sign_up');
-  const loginLink = createLoginLink(redirect, inviteID, 'log_in');
+  const signUpLink = createLoginLink(redirect, inviteID, 'sign-up');
+  const loginLink = createLoginLink(redirect, inviteID, 'login');
 
   return (
-    <Wrapper>
-      <Link to='/'><Logo /></Link>
+    <Wrapper className='o-container'>
+      <Link to='/'>
+        <Logo />
+      </Link>
       <NavLinks>
-        {isContainingData(userData) && (
-            <Dropdown />
-        )}
+        {isContainingData(userData) && <Dropdown />}
         {isEmptyData(userData) && (
           <>
             <Link to={signUpLink}>Sign Up</Link>
@@ -37,7 +35,7 @@ function Header() {
         )}
       </NavLinks>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.nav`
@@ -61,5 +59,3 @@ const NavLinks = styled.div`
     font-size: 1.1em;
   }
 `;
-
-export default Header;

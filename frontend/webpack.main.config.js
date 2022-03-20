@@ -1,3 +1,5 @@
+const PRODUCTION = process.env.PRODUCTION === 'true';
+
 module.exports = {
   mode: PRODUCTION ? 'production' : 'development',
 

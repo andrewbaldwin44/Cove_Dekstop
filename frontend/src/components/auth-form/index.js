@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState, useContext } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 import TextField from '@material-ui/core/TextField';
 
-import Header from '../Header/index';
 import Footer from './Footer';
 
 import { AuthenticationContext } from '../AuthenticationContext';
@@ -22,10 +21,7 @@ const {
 } = AUTHENTICATION_ERROR_MESSAGES;
 
 function Login({ accountCreated }) {
-  const {
-    createUserWithEmail,
-    signInWithEmail,
-  } = useContext(AuthenticationContext);
+  const { createUserWithEmail, signInWithEmail } = useContext(AuthenticationContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +36,7 @@ function Login({ accountCreated }) {
   const signUpLink = createLoginLink(redirect, inviteID, 'sign_up');
   const loginLink = createLoginLink(redirect, inviteID, 'log_in');
 
-  const createUserErrorMessage = (code) => {
+  const createUserErrorMessage = code => {
     let newErrorMessage = '';
     switch (code) {
       case 'auth/user-not-found':
@@ -61,7 +57,7 @@ function Login({ accountCreated }) {
     }
 
     setErrorMessage(newErrorMessage);
-  }
+  };
 
   const redirectTo = path => history.push(path);
   const sendErrorCode = ({ code }) => createUserErrorMessage(code);
@@ -72,14 +68,12 @@ function Login({ accountCreated }) {
       validateInvitation(userEmail, inviteID, redirect)
         .then(() => redirectTo(`/cove/${redirect}`))
         .catch(error => redirectTo('/'));
-    }
-    else if (redirect) {
+    } else if (redirect) {
       redirectTo(`/cove/${redirect}`);
-    }
-    else {
+    } else {
       redirectTo('/');
     }
-  }
+  };
 
   const userSignup = () => {
     if (isStrongPassword(password)) {
@@ -87,64 +81,59 @@ function Login({ accountCreated }) {
         .then(({ user: { email } }) => email)
         .then(handleRedirect)
         .catch(sendErrorCode);
-    }
-    else if (password.length < minimumPasswordLength) {
+    } else if (password.length < minimumPasswordLength) {
       setErrorMessage(passwordTooShort);
-    }
-    else {
+    } else {
       setErrorMessage(missingPasswordRequirements);
     }
-  }
+  };
 
   const userLogin = () => {
     signInWithEmail(email, password)
       .then(({ user: { email } }) => email)
       .then(handleRedirect)
       .catch(sendErrorCode);
-  }
+  };
 
   const submitForm = event => {
     event.preventDefault();
 
     if (accountCreated) userLogin();
-    else userSignup()
-  }
+    else userSignup();
+  };
 
   return (
-    <>
-      <Header />
-      <Wrapper>
-        <PageLabel>{accountCreated ? 'Log In' : 'Sign Up'}</PageLabel>
-        <StyledForm onSubmit={submitForm}>
-          <TextField
-            type="email"
-            label="Email"
-            onChange={event => setEmail(event.target.value)}
-            variant="outlined"
-            required
-          />
-          <TextField
-            type="password"
-            label="Password"
-            onChange={event => setPassword(event.target.value)}
-            variant="outlined"
-            required
-          />
-          <SubmitButton type="submit">{accountCreated ? 'Log In' : 'Sign Up'}</SubmitButton>
-          <ErrorMessage errorMessage={errorMessage}>
-            <span>{errorMessage}</span>
-          </ErrorMessage>
-        </StyledForm>
-        <Footer
-          accountCreated={accountCreated}
-          handleRedirect={handleRedirect}
-          sendErrorCode={sendErrorCode}
-          signUpLink={signUpLink}
-          loginLink={loginLink}
+    <Wrapper className='o-container'>
+      <PageLabel>{accountCreated ? 'Log In' : 'Sign Up'}</PageLabel>
+      <StyledForm onSubmit={submitForm}>
+        <TextField
+          type='email'
+          label='Email'
+          onChange={event => setEmail(event.target.value)}
+          variant='outlined'
+          required
         />
-      </Wrapper>
-    </>
-  )
+        <TextField
+          type='password'
+          label='Password'
+          onChange={event => setPassword(event.target.value)}
+          variant='outlined'
+          required
+        />
+        <SubmitButton type='submit'>{accountCreated ? 'Log In' : 'Sign Up'}</SubmitButton>
+        <ErrorMessage errorMessage={errorMessage}>
+          <span>{errorMessage}</span>
+        </ErrorMessage>
+      </StyledForm>
+      <Footer
+        accountCreated={accountCreated}
+        handleRedirect={handleRedirect}
+        sendErrorCode={sendErrorCode}
+        signUpLink={signUpLink}
+        loginLink={loginLink}
+      />
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.div`
@@ -189,12 +178,12 @@ const SubmitButton = styled.button`
 `;
 
 const ErrorMessage = styled.div`
-  display: ${({ errorMessage }) => errorMessage === '' ? 'none' : 'flex'};
+  display: ${({ errorMessage }) => (errorMessage === '' ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 50px;
-  background-color: #FFE3E3;
+  background-color: #ffe3e3;
   color: #f13240;
   padding: 20px 10px;
 `;

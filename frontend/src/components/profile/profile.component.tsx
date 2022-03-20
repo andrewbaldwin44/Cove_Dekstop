@@ -1,31 +1,26 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 
-import ThemeSelector from './ThemeSelector';
+import { AuthenticationContext } from 'components/AuthenticationContext';
+import ThemeSelector from 'components/profile/ThemeSelector';
 import Form from './Form';
 
 import Spinner from '../Spinner';
 
-function User({ userData, updateUserDatabase, uploadFile }) {
-  const {
-    displayName,
-    email,
-    photoURL,
-    selectedTheme: currentTheme
-  } = userData;
+function User() {
+  const { userData, updateUserDatabase, uploadFile } = useContext(AuthenticationContext);
+
+  const { displayName, email, photoURL, selectedTheme: currentTheme } = userData;
 
   const { register, handleSubmit } = useForm();
 
   const [selectedTheme, setSelectedTheme] = useState(currentTheme);
-  const [status, setStatus] = useState('idle')
+  const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState(null);
 
   const onSubmit = async data => {
-    const {
-      name,
-      profile
-    } = data;
+    const { name, profile } = data;
 
     const [file] = profile;
 
@@ -50,44 +45,44 @@ function User({ userData, updateUserDatabase, uploadFile }) {
       setMessage('Profile Updated!');
       setStatus('idle');
     }
-  }
+  };
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmit)}>
-      <Left>
-        <ProfilePicture src={photoURL} alt='Profile' />
-        <h3>{displayName}</h3>
-        <span className='email'>{email}</span>
-      </Left>
-      <Right>
-        <h3>Preferences</h3>
-        <ThemeSelector
-          selectedTheme={selectedTheme}
-          setSelectedTheme={setSelectedTheme}
-        />
-        <h3 className='bottom-right'>Edit Public Profile</h3>
-        <Form
-          currentName={displayName}
-          register={register}
-        />
-        <Footer>
-          {status === 'loading' && (
-            <SpinnerContainer>
-              <Spinner />
-            </SpinnerContainer>
-          )}
-          <Message message={message}>{message}</Message>
-          <SaveButton
-            type='submit'
-            disabled={status === 'loading'}
-          >
-            Save
-          </SaveButton>
-        </Footer>
-      </Right>
-    </Wrapper>
-  )
+    <Container>
+      <Wrapper onSubmit={handleSubmit(onSubmit)}>
+        <Left>
+          <ProfilePicture src={photoURL} alt='Profile' />
+          <h3>{displayName}</h3>
+          <span className='email'>{email}</span>
+        </Left>
+        <Right>
+          <h3>Preferences</h3>
+          <ThemeSelector selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} />
+          <h3 className='bottom-right'>Edit Public Profile</h3>
+          <Form currentName={displayName} register={register} />
+          <Footer>
+            {status === 'loading' && (
+              <SpinnerContainer>
+                <Spinner />
+              </SpinnerContainer>
+            )}
+            <Message message={message}>{message}</Message>
+            <SaveButton type='submit' disabled={status === 'loading'}>
+              Save
+            </SaveButton>
+          </Footer>
+        </Right>
+      </Wrapper>
+    </Container>
+  );
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: var(--navbar-height);
+  margin-left: 90px;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -155,11 +150,11 @@ const Footer = styled.div`
 
 const Message = styled.div`
   display: flex;
-  visibility: ${({ message }) => message === null ? 'hidden' : 'visible'};
+  visibility: ${({ message }) => (message === null ? 'hidden' : 'visible')};
   align-items: center;
   color: black;
   justify-content: center;
-  background-image:linear-gradient(to bottom right, var(--light-green), var(--secondary-green));
+  background-image: linear-gradient(to bottom right, var(--light-green), var(--secondary-green));
   border-radius: 5px;
   height: 50px;
   width: 70%;

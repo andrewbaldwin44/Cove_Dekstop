@@ -1,44 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
 
-// import Navbar from 'components/navbar/navbar.component';
+import Navbar from 'components/navbar/navbar.component';
 import breakpoints from 'styles/breakpoints';
 
-interface IMain {
-  verticalPadding?: boolean;
-}
-
-interface ILayout extends IMain {
+interface ILayout {
   children: JSX.Element;
 }
 
-const Layout = ({ children, verticalPadding = true }: ILayout) => {
+const Layout = ({ children }: ILayout) => {
   return (
     <section>
-      <Main verticalPadding={verticalPadding} className='o-container f-container'>
-        {children}
-      </Main>
+      <Navbar />
+      <main className='f-container'>{children}</main>
     </section>
   );
 };
 
 export default Layout;
-
-const Main = styled.main<IMain>`
-  ${({ verticalPadding }) =>
-    verticalPadding &&
-    `
-    padding-top: 20px;
-    padding-bottom: 20px;
-
-    ${breakpoints('mid')`
-      padding-top: 35px;
-      padding-bottom: 35px;
-    `}
-
-    ${breakpoints('large')`
-      padding-top: 50px;
-      padding-bottom: 50px;
-    `}
-  `}
-`;

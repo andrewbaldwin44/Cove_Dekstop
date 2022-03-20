@@ -1,12 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
 
-import Youtube from '../../assets/images/youtube.png';
-import Deezer from '../../assets/images/deezer.png';
-import Netflix from '../../assets/images/netflix.png';
-import Placeholder from '../../assets/images/placeholder.jpeg';
+import Youtube from 'assets/images/youtube.png';
+import Deezer from 'assets/images/deezer.png';
+import Netflix from 'assets/images/netflix.png';
+import Placeholder from 'assets/images/placeholder.jpeg';
 
-function Features() {
+export default function Features() {
   return (
     <Wrapper>
       <Row>
@@ -37,7 +36,7 @@ function Features() {
         </TileItem>
       </Row>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -86,5 +85,3 @@ const AppPresent = styled.div`
     height: 70px;
   }
 `;
-
-export default Features

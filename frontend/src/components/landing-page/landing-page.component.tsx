@@ -1,10 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 
-import Features from './Features';
-import Beach from '../../assets/images/landing.jpeg';
+import Features from 'components/landing-page/features.component';
+import Beach from 'assets/images/landing.jpeg';
 
-function Landing() {
+export default function LandingPage() {
   return (
     <>
       <Wrapper>
@@ -16,7 +15,7 @@ function Landing() {
       </Wrapper>
       <Features />
     </>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -44,6 +43,7 @@ const TextContent = styled.div`
     font-size: 5em;
     font-weight: 500;
     text-shadow: var(--heading-text-shadow);
+    color: white;
   }
 
   h3 {
@@ -57,7 +57,5 @@ const Overlay = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.25) 100%, rgba(255,255,255,0.15) 0%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 100%, rgba(255, 255, 255, 0.15) 0%);
 `;
-
-export default Landing;
