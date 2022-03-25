@@ -1,4 +1,4 @@
-const { app, BrowserView, BrowserWindow } = require('electron');
+import { app, BrowserView, BrowserWindow } from 'electron';
 
 const PRODUCTION = process.env.PRODUCTION === 'true';
 const PORT = process.env.PORT || 3000;
