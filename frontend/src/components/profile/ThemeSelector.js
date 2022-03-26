@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { useDispatch } from "react-redux";
-import { themeActions } from "../../modules/theme/theme.actions.ts";
+import { useDispatch } from 'react-redux';
+import { themeActions } from '../../modules/theme/theme.slice';
 
-import { themes } from "../../themes";
-import { toArray } from "../../utils/index";
+import { themes } from '../../themes';
+import { toArray } from '../../utils/index';
 
 function ThemeSelector({ selectedTheme, setSelectedTheme }) {
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const ThemeIcon = styled.img`
   border-radius: 50%;
   cursor: pointer;
   border: ${({ theme, selectedTheme }) => {
-    return theme === selectedTheme ? "2px solid var(--main-red)" : "";
+    return theme === selectedTheme ? '2px solid var(--main-red)' : '';
   }};
 `;
 

@@ -5,9 +5,7 @@ import { Provider } from 'react-redux';
 import AuthenticationProvider from 'components/AuthenticationContext';
 import App from 'components/App';
 
-import configureStore from 'redux/store';
-
-const store = configureStore();
+import store from 'redux/store';
 
 render(
   <StrictMode>

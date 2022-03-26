@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import GlobalStyles from 'styles/GlobalStyles';
 import PageRouter from 'pages/page-router';
 import { AuthenticationContext } from 'components/AuthenticationContext';
-import { themeActions } from 'modules/theme/theme.actions';
+import { themeActions } from 'modules/theme/theme.slice';
 import { isContainingData } from 'utils';
 import { themes } from 'styles/config/themes';
 

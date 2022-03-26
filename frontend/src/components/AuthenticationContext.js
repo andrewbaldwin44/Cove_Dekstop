@@ -122,7 +122,6 @@ function AuthenticationProvider({ children, signOut, user }) {
 
   useEffect(() => {
     let userDataObserver;
-    console.log({ user });
 
     if (user) {
       const { uid: userID } = user;
