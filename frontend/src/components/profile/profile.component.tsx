@@ -8,9 +8,20 @@ import Form from './Form';
 
 import Spinner from '../Spinner';
 
-function User() {
-  const { userData, updateUserDatabase, uploadFile } = useContext(AuthenticationContext);
+interface IUserData {
+  email: string;
+  displayName: string;
+  userID: number;
+  photoURL: string;
+}
 
+interface IProfile {
+  userData: IUserData;
+  uploadFile: (fileURL: string) => void;
+  updateUserDatabase: (newUserData: IUserData) => void;
+}
+
+export default function Profile({ userData, uploadFile, updateUserDatabase }: IProfile) {
   const { displayName, email, photoURL, selectedTheme: currentTheme } = userData;
 
   const { register, handleSubmit } = useForm();
@@ -176,5 +187,3 @@ const SpinnerContainer = styled.div`
   height: 100%;
   width: 100%;
 `;
-
-export default User;

@@ -36,7 +36,6 @@
     "no-underscore-dangle": "off",
     "object-curly-newline": "off",
     "no-use-before-define": "off",
-    "react/prop-types": "off",
-    "@typescript-eslint/no-empty-interface": "off"
+    "react/prop-types": "off"
   }
 }

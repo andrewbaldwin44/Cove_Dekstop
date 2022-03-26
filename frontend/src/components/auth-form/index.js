@@ -20,7 +20,7 @@ const {
   defaultMessage,
 } = AUTHENTICATION_ERROR_MESSAGES;
 
-function Login({ accountCreated }) {
+function Login({ accountCreated = false }) {
   const { createUserWithEmail, signInWithEmail } = useContext(AuthenticationContext);
 
   const [email, setEmail] = useState('');

@@ -6,7 +6,7 @@ interface ILayout {
   children: JSX.Element;
 }
 
-function Layout({ children }): ILayout {
+function Layout({ children }: ILayout) {
   return (
     <section>
       <Navbar />

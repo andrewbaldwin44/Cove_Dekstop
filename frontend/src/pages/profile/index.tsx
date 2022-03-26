@@ -6,7 +6,7 @@ import { isContainingData } from 'utils/index';
 import Profile from 'components/profile/profile.component';
 
 export default function ProfilePage() {
-  const { userData } = useContext(AuthenticationContext);
+  const { userData, uploadFile, updateUserDatabase } = useContext(AuthenticationContext);
 
   return isContainingData(userData) ? (
     <Profile userData={userData} updateUserDatabase={updateUserDatabase} uploadFile={uploadFile} />
