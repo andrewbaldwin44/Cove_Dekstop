@@ -1,4 +1,4 @@
-import { app, BrowserView, BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 
 const PRODUCTION = process.env.PRODUCTION === 'true';
 const PORT = process.env.PORT || 3000;
@@ -9,11 +9,6 @@ const createWindow = () => {
     height: 600,
     webPreferences: { nodeIntegration: true, contextIsolation: false },
   });
-
-  // const view = new BrowserView();
-  // win.setBrowserView(view);
-  // view.setBounds({ x: 0, y: 0, width: 300, height: 300 });
-  // view.webContents.loadURL("https://electronjs.org");
 
   if (PRODUCTION) {
     win.loadFile('index.html');

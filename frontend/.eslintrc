@@ -12,6 +12,14 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
   "plugins": ["react", "react-hooks", "jsx-a11y", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": "off",
@@ -23,6 +31,12 @@
     "no-tabs": "off",
     "prefer-template": "off",
     "implicit-arrow-linebreak": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "import/extensions": "off",
+    "no-underscore-dangle": "off",
+    "object-curly-newline": "off",
+    "no-use-before-define": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/no-empty-interface": "off"
   }
 }

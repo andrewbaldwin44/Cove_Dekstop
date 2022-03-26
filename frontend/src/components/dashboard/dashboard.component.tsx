@@ -2,9 +2,9 @@ import { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import { AuthenticationContext } from 'components/AuthenticationContext';
-import NewRoomDialog from '../NewRoomDialog';
-import RoomPortal from '../RoomPortal';
-import { isContainingData, toArray } from 'utils';
+import { toArray } from 'utils';
+import NewRoomDialog from 'components/NewRoomDialog';
+import RoomPortal from 'components/RoomPortal';
 
 export default function Dashboard() {
   const { userRooms } = useContext(AuthenticationContext);
@@ -17,9 +17,9 @@ export default function Dashboard() {
     <Wrapper>
       <Add onClick={configureNewRoom}>Add +</Add>
       {userRooms &&
-        toArray(userRooms).map(([roomID, roomDetails]) => {
-          return <RoomPortal key={roomID} roomID={roomID} roomDetails={roomDetails} />;
-        })}
+        toArray(userRooms).map(([roomID, roomDetails]) => (
+          <RoomPortal key={roomID} roomID={roomID} roomDetails={roomDetails} />
+        ))}
       <NewRoomDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
     </Wrapper>
   );

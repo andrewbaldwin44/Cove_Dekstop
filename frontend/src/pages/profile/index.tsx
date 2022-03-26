@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { AuthenticationContext } from 'components/AuthenticationContext';
-import { isContainingData, isEmptyData } from '../../utils/index';
+import { isContainingData } from 'utils/index';
 import Profile from 'components/profile/profile.component';
 
 export default function ProfilePage() {

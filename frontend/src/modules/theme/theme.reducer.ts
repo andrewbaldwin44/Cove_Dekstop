@@ -1,5 +1,9 @@
-import { themes } from '../../styles/config/themes';
-import { THEME, IThemeAction } from '../../modules/theme/theme.actions';
+import { themes, IThemeColors } from 'styles/config/themes';
+import { THEME, IThemeAction } from 'modules/theme/theme.actions';
+
+export interface IThemeState {
+  colors: IThemeColors;
+}
 
 const initialState = {
   colors: themes.default.colors,

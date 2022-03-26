@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Navbar from 'components/navbar/navbar.component';
-import breakpoints from 'styles/breakpoints';
 
 interface ILayout {
   children: JSX.Element;

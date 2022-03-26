@@ -9,7 +9,7 @@ import { isContainingData } from 'utils';
 import { themes } from 'styles/config/themes';
 
 export default function App() {
-  const { userData, message, setMessage } = useContext(AuthenticationContext);
+  const { userData } = useContext(AuthenticationContext);
 
   const dispatch = useDispatch();
 
