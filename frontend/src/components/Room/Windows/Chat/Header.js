@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
-import { getRoomMembers } from '../../../../utils/authenticationUtils';
+import { getRoomMembers } from 'api/users.api';
 import { RoomContext } from '../../RoomContext';
 
 function Header() {
-  const {
-    roomID,
-  } = useContext(RoomContext);
+  const { roomID } = useContext(RoomContext);
 
   const [members, setMemebers] = useState(null);
 
-  const parseMemberData = (roomMembers) => {
+  const parseMemberData = roomMembers => {
     const memberData = roomMembers.reduce((memberData, member) => {
       const { displayName, photoURL } = member;
 
@@ -19,47 +17,31 @@ function Header() {
       const existingPhotos = memberData.photos || [];
 
       return {
-        names: [
-          ...existingNames,
-          displayName
-        ],
-        photos: [
-          ...existingPhotos,
-          photoURL,
-        ],
+        names: [...existingNames, displayName],
+        photos: [...existingPhotos, photoURL],
       };
     }, {});
 
     setMemebers(memberData);
-  }
+  };
 
   useEffect(() => {
-    getRoomMembers(roomID)
-      .then(({ roomMembers }) => parseMemberData(roomMembers));
-      // eslint-disable-next-line
+    getRoomMembers(roomID).then(({ roomMembers }) => parseMemberData(roomMembers));
+    // eslint-disable-next-line
   }, []);
 
   return (
     <Wrapper>
       <Profiles>
-        {members && members.photos.map((photo, index) => {
-          return (
-            <img key={`chatphoto${index}`} src={photo} alt='Chat Member' />
-          )
-        })}
+        {members &&
+          members.photos.map((photo, index) => {
+            return <img key={`chatphoto${index}`} src={photo} alt='Chat Member' />;
+          })}
       </Profiles>
-      {members && members.names.length > 1 && (
-        <div>
-          {members.names.join(', ')}
-        </div>
-      )}
-      {members && members.names.length === 1 && (
-        <div>
-          {members.names[0]}
-        </div>
-      )}
+      {members && members.names.length > 1 && <div>{members.names.join(', ')}</div>}
+      {members && members.names.length === 1 && <div>{members.names[0]}</div>}
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
@@ -73,8 +55,6 @@ const Wrapper = styled.div`
 `;
 
 const Profiles = styled.div`
-
-
   img {
     min-height: 50px;
     min-width: 50px;

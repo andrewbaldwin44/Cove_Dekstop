@@ -3,64 +3,57 @@ import styled from 'styled-components';
 
 import InviteDialogue from './InviteDialogue';
 
-import { getRoomMembers } from '../../../../utils/authenticationUtils';
+import { getRoomMembers } from 'api/users.api';
 import { RoomContext } from '../../RoomContext';
 
 function Members() {
-  const {
-    roomID,
-  } = useContext(RoomContext);
+  const { roomID } = useContext(RoomContext);
 
   const [members, setMemebers] = useState(null);
   const [openDialogue, setOpenDialogue] = useState(false);
 
   useEffect(() => {
-    getRoomMembers(roomID)
-      .then(({ roomMembers }) => setMemebers(roomMembers));
-      // eslint-disable-next-line
+    getRoomMembers(roomID).then(({ roomMembers }) => setMemebers(roomMembers));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     window.onclick = event => {
       if (event.target.classList.contains('invite-dialogue')) setOpenDialogue(false);
-    }
+    };
 
     return () => {
       window.onclick = null;
-    }
+    };
   });
 
   return (
     <Wrapper>
-      {openDialogue && (
-        <InviteDialogue />
-      )}
+      {openDialogue && <InviteDialogue />}
       <Header>
         <h4>Members</h4>
-        <button
-          type='button'
-          onClick={() => setOpenDialogue(true)}
-        >
+        <button type='button' onClick={() => setOpenDialogue(true)}>
           Invite
         </button>
       </Header>
       <Body>
-        {members && members.map(members => {
-          const { displayName, email, photoURL } = members;
+        {members &&
+          members.map(members => {
+            const { displayName, email, photoURL } = members;
 
-          return (
-            <Profile key={`memberprofile${email}`}>
-              <img src={photoURL} alt='Profile' />
-              <div>
-                <h3>{displayName}</h3>
-                <span className='email'>{email}</span>
-              </div>
-            </Profile>
-          )
-        })}
+            return (
+              <Profile key={`memberprofile${email}`}>
+                <img src={photoURL} alt='Profile' />
+                <div>
+                  <h3>{displayName}</h3>
+                  <span className='email'>{email}</span>
+                </div>
+              </Profile>
+            );
+          })}
       </Body>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`

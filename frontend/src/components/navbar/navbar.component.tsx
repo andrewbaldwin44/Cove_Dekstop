@@ -6,7 +6,7 @@ import Logo from './Logo';
 import Dropdown from './Dropdown';
 
 import { AuthenticationContext } from '../AuthenticationContext';
-import { createLoginLink } from '../../utils/authenticationUtils';
+import { createLoginLink } from 'utils/authenticationUtils';
 
 import { isContainingData, isEmptyData } from '../../utils/index';
 

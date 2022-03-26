@@ -7,7 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import Footer from './Footer';
 
 import { AuthenticationContext } from '../AuthenticationContext';
-import { validateInvitation, createLoginLink } from '../../utils/authenticationUtils';
+import { validateInvitation } from 'api/users.api';
+import { createLoginLink } from 'utils/authenticationUtils';
 
 import { PASSWORD_REQUIREMENTS, AUTHENTICATION_ERROR_MESSAGES } from '../../constants';
 const { minimumPasswordRequirements, minimumPasswordLength } = PASSWORD_REQUIREMENTS;

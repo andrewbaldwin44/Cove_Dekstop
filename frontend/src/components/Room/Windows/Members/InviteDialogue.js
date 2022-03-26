@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 
-import { requestInvite } from '../../../../utils/authenticationUtils';
+import { requestInvite } from 'api/users.api';
 import { BASE_URL } from '../../../../constants';
 
 import { FiRefreshCcw } from 'react-icons/fi';
@@ -16,24 +16,24 @@ function InviteDialogue() {
 
   const constructLink = link => {
     return BASE_URL + link;
-  }
+  };
 
   const requestPrivateLink = () => {
     requestInvite(roomID, 'private')
       .then(({ registrationLink }) => constructLink(registrationLink))
       .then(link => setPrivateLink(link));
-  }
+  };
 
   const requestPublicLink = () => {
     requestInvite(roomID, 'public')
       .then(({ registrationLink }) => constructLink(registrationLink))
       .then(link => setPublicLink(link));
-  }
+  };
 
   const handleInputFoucs = event => {
     event.target.select();
     document.execCommand('copy');
-  }
+  };
 
   useEffect(() => {
     requestPrivateLink();
@@ -47,11 +47,7 @@ function InviteDialogue() {
         <div>
           <h4>Private</h4>
           <Actions>
-            <input
-              type='text'
-              defaultValue={privateLink}
-              onFocus={handleInputFoucs}
-            />
+            <input type='text' defaultValue={privateLink} onFocus={handleInputFoucs} />
             <button type='button' onClick={requestPrivateLink}>
               <FiRefreshCcw />
             </button>
@@ -60,11 +56,7 @@ function InviteDialogue() {
         <div>
           <h4>Public</h4>
           <Actions>
-            <input
-              type='text'
-              defaultValue={publicLink}
-              onFocus={handleInputFoucs}
-            />
+            <input type='text' defaultValue={publicLink} onFocus={handleInputFoucs} />
             <button type='button' onClick={requestPublicLink}>
               <FiRefreshCcw />
             </button>
@@ -72,7 +64,7 @@ function InviteDialogue() {
         </div>
       </Dialogue>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`

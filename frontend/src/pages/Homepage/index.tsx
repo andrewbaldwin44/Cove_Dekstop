@@ -7,6 +7,6 @@ import { isContainingData } from 'utils';
 
 export default function Homepage() {
   const { userData } = useContext(AuthenticationContext);
-
+  console.log({ userData });
   return isContainingData(userData) ? <Dashboard /> : <LandingPage />;
 }

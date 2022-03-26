@@ -4,33 +4,27 @@ import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import 'firebase/storage'
+import 'firebase/storage';
 
 import DefaultProfile from '../assets/images/default-profile.png';
 
 import { isContainingData, toArray } from '../utils/index';
-import {
-  sendUserData,
-  validateRoomMember,
-  getRoomDetails,
-} from '../utils/authenticationUtils';
+import { sendUserData, validateRoomMember, getRoomDetails } from 'api/users.api';
 
 import { DATABASE_PATHS, ERROR_MESSAGES } from '../constants';
-const {
-  USERS_PATH,
-} = DATABASE_PATHS;
+const { USERS_PATH } = DATABASE_PATHS;
 const { unknownError } = ERROR_MESSAGES;
 
 export const AuthenticationContext = createContext(null);
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAJsxWPJggGuH1ZsRt5wT1gO3onS4zF-P0",
-  authDomain: "final-project-96d37.firebaseapp.com",
-  databaseURL: "https://final-project-96d37.firebaseio.com",
-  projectId: "final-project-96d37",
-  storageBucket: "final-project-96d37.appspot.com",
-  messagingSenderId: "268524372667",
-  appId: "1:268524372667:web:14fdadaa80c76a09f7df9e"
+  apiKey: 'AIzaSyAJsxWPJggGuH1ZsRt5wT1gO3onS4zF-P0',
+  authDomain: 'final-project-96d37.firebaseapp.com',
+  databaseURL: 'https://final-project-96d37.firebaseio.com',
+  projectId: 'final-project-96d37',
+  storageBucket: 'final-project-96d37.appspot.com',
+  messagingSenderId: '268524372667',
+  appId: '1:268524372667:web:14fdadaa80c76a09f7df9e',
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -58,13 +52,13 @@ function AuthenticationProvider({ children, signOut, user }) {
   const handleSignOut = () => {
     signOut();
     setUserData(null);
-  }
+  };
 
   const retrieveClientID = () => {
     if (firebaseAppAuth.currentUser) {
-      return firebaseAppAuth.currentUser.getIdToken(true)
+      return firebaseAppAuth.currentUser.getIdToken(true);
     }
-  }
+  };
 
   const updateUserDatabase = newData => {
     if (isContainingData(userData)) {
@@ -74,7 +68,7 @@ function AuthenticationProvider({ children, signOut, user }) {
 
       userReference.update(newData);
     }
-  }
+  };
 
   const uploadFile = async file => {
     const storageRef = firebaseApp.storage().ref();
@@ -82,7 +76,7 @@ function AuthenticationProvider({ children, signOut, user }) {
 
     await fileRef.put(file);
     return fileRef.getDownloadURL();
-  }
+  };
 
   const updateUserData = async (userID, snapshot) => {
     const data = snapshot.data();
@@ -99,49 +93,50 @@ function AuthenticationProvider({ children, signOut, user }) {
       selectedTheme = 'default',
     } = data;
 
-    const newUserData = { userID, displayName, email, deezerID, photoURL, selectedTheme};
+    const newUserData = { userID, displayName, email, deezerID, photoURL, selectedTheme };
     const allRooms = [...toArray(ownedRooms, 'keys'), ...toArray(participatingRooms, 'keys')];
 
     const { roomDetails } = await getRoomDetails(allRooms);
 
     setUserRooms(roomDetails);
     setUserData(newUserData);
-  }
+  };
 
-  const observeUserData = (userID) => {
+  const observeUserData = userID => {
     const roomReference = database.collection(USERS_PATH).doc(userID);
 
     const observer = roomReference.onSnapshot(snapshot => updateUserData(userID, snapshot));
 
     return observer;
-  }
+  };
 
   const processUserData = userID => {
     let { email, displayName, photoURL } = user;
 
     photoURL = photoURL || DefaultProfile;
 
-    sendUserData({ email, displayName, photoURL, userID })
-      .catch(({ message }) => setMessage(unknownError));
-  }
+    sendUserData({ email, displayName, photoURL, userID }).catch(({ message }) =>
+      setMessage(unknownError),
+    );
+  };
 
   useEffect(() => {
     let userDataObserver;
+    console.log({ user });
 
     if (user) {
       const { uid: userID } = user;
 
       userDataObserver = observeUserData(userID);
       processUserData(userID);
-    }
-    else if (user === null) {
+    } else if (user === null) {
       setUserData({});
     }
 
     return () => {
       if (userDataObserver) userDataObserver();
-    }
-  // eslint-disable-next-line
+    };
+    // eslint-disable-next-line
   }, [user]);
 
   return (
@@ -165,7 +160,7 @@ function AuthenticationProvider({ children, signOut, user }) {
       {children}
     </AuthenticationContext.Provider>
   );
-};
+}
 
 export default withFirebaseAuth({
   firebaseAppAuth,
