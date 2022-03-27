@@ -1,14 +1,12 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-import { AuthenticationContext } from 'components/AuthenticationContext';
 import { toArray } from 'utils';
-import NewRoomDialog from 'components/NewRoomDialog';
+// import NewRoomDialog from 'components/NewRoomDialog';
 import RoomPortal from 'components/RoomPortal';
+// <NewRoomDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
 
-export default function Dashboard() {
-  const { userRooms } = useContext(AuthenticationContext);
-
+export default function Dashboard({ userRooms }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const configureNewRoom = () => setOpenDialog(true);
@@ -20,7 +18,6 @@ export default function Dashboard() {
         toArray(userRooms).map(([roomID, roomDetails]) => (
           <RoomPortal key={roomID} roomID={roomID} roomDetails={roomDetails} />
         ))}
-      <NewRoomDialog openDialog={openDialog} setOpenDialog={setOpenDialog} />
     </Wrapper>
   );
 }

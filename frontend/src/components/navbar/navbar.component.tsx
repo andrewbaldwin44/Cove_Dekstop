@@ -1,18 +1,14 @@
-import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Logo from './Logo';
-import Dropdown from './Dropdown';
 
-import { AuthenticationContext } from '../AuthenticationContext';
 import { createLoginLink } from 'utils/authenticationUtils';
 
 import { isContainingData, isEmptyData } from '../../utils/index';
 
-export default function Navbar() {
-  const { userData } = useContext(AuthenticationContext);
-
+function Navbar({ userData }) {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const redirect = query.get('redirect');
@@ -26,7 +22,6 @@ export default function Navbar() {
         <Logo />
       </Link>
       <NavLinks>
-        {isContainingData(userData) && <Dropdown />}
         {isEmptyData(userData) && (
           <>
             <Link to={signUpLink}>Sign Up</Link>
@@ -37,6 +32,10 @@ export default function Navbar() {
     </Wrapper>
   );
 }
+
+const storeConnector = ({ user }) => ({ userData: user });
+
+export default connect(storeConnector)(Navbar);
 
 const Wrapper = styled.nav`
   display: flex;
