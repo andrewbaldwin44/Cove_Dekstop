@@ -1,0 +1,29 @@
+{
+  "authForm": {
+    "welcome": "Welcome to Cove!",
+    "welcomeBack": "Welcome Back!",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "verifyPassword": "Re-enter password",
+    "login": "Log In",
+    "signUp": "Sign Up",
+    "footer": {
+      "divider": "OR",
+      "signupText": "Don't have an account?",
+      "loginText": "I already have an account",
+      "forgotPassword": "Forgot Password?",
+      "google": "Continue With Google"
+    },
+    "errorMessages": {
+      "invalidEmail": "Email is invalid",
+      "wrongPassword": "Password is incorrect",
+      "emailInUse": "Email in use",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "missingPasswordRequirements": "Password should contain at least one upper case character, number or symbol",
+      "defaultMessage": "Email or Password is invalid",
+      "passwordTooShort": "Password is too short (minimum 8 characters)",
+      "userNotFound": "This email doesn't belong to an active account"
+    }
+  }
+}
