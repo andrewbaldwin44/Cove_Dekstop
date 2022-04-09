@@ -33,9 +33,17 @@ function createSagaActions(name, sagas) {
   );
 }
 
+function createActionType(name, actionType) {
+  if (actionType === '__rootInitialLoad') {
+    return '__root__/initialLoad';
+  }
+
+  return `${name}/${actionType}`;
+}
+
 function createSagaWatcher(name, sagas) {
   const watcherArray = Object.entries(sagas).map(([actionType, saga]) =>
-    takeEvery(`${name}/${actionType}`, saga),
+    takeEvery(createActionType(name, actionType), saga),
   );
 
   const watcher = function* watchSaga() {

@@ -3,16 +3,20 @@ import { put, select } from 'redux-saga/effects';
 import {
   auth,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   googleProvider,
   sendUserEmailVerification,
+  waitForUser,
 } from 'auth/auth-service';
 import { userActions } from 'auth/user.slice';
 import { deleteCookie, getCookie, setCookie } from 'utils/cookies';
 import getTranslations from 'utils/translations';
 import { formActions } from 'components/form/form.slice';
 import { dateDaysFromNow } from 'utils/datetime';
+import { pick } from 'utils/object';
 
 export const userWatchers = {
+  __rootInitialLoad: loadUser,
   initiateLogin: userLogin,
   initiateRegister: userRegister,
   initiateGoogleLogin: signInWithGoogle,
@@ -23,6 +27,13 @@ export const userWatchers = {
   confirmPasswordReset,
   deleteUser,
 };
+
+function* loadUser() {
+  if (getCookie('current_user')) {
+    const currentUser = yield waitForUser();
+    yield put(userActions.setUser(pick(['displayName', 'photoURL', 'email'], currentUser)));
+  }
+}
 
 function* userRegister({ payload: { email, password, displayName } }) {
   try {
@@ -48,13 +59,13 @@ function* deleteUser({ payload: { email } }) {
 
 function* userLogin({ payload: { email, password } }) {
   try {
-    yield auth.signInWithEmailAndPassword(email, password);
+    yield signInWithEmailAndPassword(email, password);
   } catch ({ code }) {
     yield handleFirebaseAuthError({ code });
     return;
   }
 
-  const { displayName } = auth.currentUser.toJSON();
+  const { displayName } = auth.currentUser;
 
   yield setAuthenticatedUser({ displayName, email });
 }
@@ -63,7 +74,7 @@ function* signInWithGoogle() {
   yield auth.signInWithPopup(googleProvider);
   yield put(formActions.submitted());
 
-  const { email, photoURL: profilePicture, displayName } = auth.currentUser.toJSON();
+  const { email, photoURL: profilePicture, displayName } = auth.currentUser;
 
   yield setAuthenticatedUser({ email, photoURL: profilePicture, displayName });
 
@@ -130,7 +141,7 @@ function* verifyEmail({ payload: { actionCode } }) {
 
   yield auth.currentUser.reload();
 
-  const { email, emailVerified } = yield auth.currentUser.toJSON();
+  const { email, emailVerified } = yield auth.currentUser;
 
   yield put(userActions.setUser({ emailVerified }));
 }

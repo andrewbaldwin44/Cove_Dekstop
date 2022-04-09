@@ -4,9 +4,9 @@ import Layout from 'components/layout/layout.component';
 import Homepage from 'pages/Homepage';
 import SignUpPage from 'pages/sign-up';
 import LoginPage from 'pages/login';
-import Profile from 'pages/profile';
-import Room from 'components/Room';
-import DeezerAuthenticated from 'pages/DeezerAuthenticated';
+// import Profile from 'pages/profile';
+// import Room from 'components/Room';
+// import DeezerAuthenticated from 'pages/DeezerAuthenticated';
 import FourOhFour from 'pages/FourOhFour';
 
 export default function PageRouter() {
@@ -23,15 +23,7 @@ export default function PageRouter() {
           <Route exact path='/users/sign-up'>
             <SignUpPage />
           </Route>
-          <Route exact path='/users/profile'>
-            <Profile />
-          </Route>
-          <Route exact path='/cove/:roomID'>
-            <Room />
-          </Route>
-          <Route exact path='/api/deezer_authenticated'>
-            <DeezerAuthenticated />
-          </Route>
+
           <Route path='/'>
             <FourOhFour />
           </Route>
@@ -40,3 +32,13 @@ export default function PageRouter() {
     </Router>
   );
 }
+
+// <Route exact path='/users/profile'>
+//   <Profile />
+// </Route>
+// <Route exact path='/cove/:roomID'>
+//   <Room />
+// </Route>
+// <Route exact path='/api/deezer_authenticated'>
+//   <DeezerAuthenticated />
+// </Route>

@@ -1,64 +1,55 @@
-import React, { useContext, useEffect, useState, createRef } from 'react';
+import { useState, useRef } from 'react';
+import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { AuthenticationContext } from '../AuthenticationContext';
+import { userActions } from 'auth/user.slice';
+import useOnClickOutside from 'hooks/use-on-click-outside';
 
-function Dropdown() {
-  const {
-    userData: {
-      email,
-      displayName,
-      photoURL,
-    },
-    handleSignOut,
-  } = useContext(AuthenticationContext);
+function Dropdown({ initiateLogout, user: { email, displayName, photoURL } }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownButton = useRef();
 
-  const [dropdownState, setDropdownState] = useState(false);
-  const dropdownButton = createRef();
+  useOnClickOutside(dropdownButton, () => setIsDropdownOpen(false));
 
   const history = useHistory();
 
   const signOutRedirect = () => {
-    handleSignOut();
+    initiateLogout();
     history.push('/');
-  }
+  };
 
-  const toggleDropdown = () => setDropdownState(!dropdownState);
-
-  useEffect(() => {
-    window.onclick = event => {
-      if (dropdownButton.current) setDropdownState(false);
-    }
-    // eslint-disable-next-line
-  });
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
-    <Wrapper>
+    <Wrapper ref={dropdownButton}>
       <button onClick={toggleDropdown}>
-        <ProfileImage src={photoURL} alt='Profile Image' ref={dropdownButton} />
+        <ProfileImage src={photoURL} alt='Profile Image' />
       </button>
-      <DropdownMenu dropdownState={dropdownState}>
+      <DropdownMenu isDropdownOpen={isDropdownOpen}>
         <h4>{displayName ? displayName : email}</h4>
         <Seperator />
         <Link to='users/profile'>View Profile</Link>
-        <button type='button' onClick={signOutRedirect}>Sign Out</button>
+        <button type='button' onClick={signOutRedirect}>
+          Sign Out
+        </button>
       </DropdownMenu>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
   position: relative;
   display: inline-block;
 
-  button, a {
+  button,
+  a {
     cursor: pointer;
   }
 `;
 
 const DropdownMenu = styled.div`
-  display: ${({ dropdownState }) => dropdownState ? 'flex' : 'none'};
+  display: ${({ isDropdownOpen }) => (isDropdownOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
   right: 0;
@@ -93,4 +84,10 @@ const ProfileImage = styled.img`
   width: 50px;
 `;
 
-export default Dropdown
+const storeConnector = ({ user }) => ({ user });
+
+const actionCreator = {
+  initiateLogout: userActions.initiateLogout,
+};
+
+export default connect(storeConnector, actionCreator)(Dropdown);

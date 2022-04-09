@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import reducer from 'redux/reducers';
 import rootSaga from 'redux/sagas';
+import rootActions from 'redux/actions.root';
 
 const DEV = process.env.DEV;
 
@@ -33,6 +34,8 @@ export type AppDispatch = typeof store.dispatch;
 
 export default function configureStore() {
   sagaMiddleware.run(rootSaga);
+
+  store.dispatch(rootActions.initialLoad());
 
   return store;
 }
